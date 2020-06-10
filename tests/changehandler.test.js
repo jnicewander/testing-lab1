@@ -63,41 +63,22 @@ describe('isPaymentSufficient returning the correct boolean', function() {
 describe('Check if giveChange produces the right coins', function() {
     test('32 change produces: quarters: 1, dimes: 0, nickels: 1, pennies: 2', function () {
         const change = new ChangeHandler(32);
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('dime');
-        change.insertCoin('penny');
-        change.insertCoin('penny');
-        change.insertCoin('penny');
-        change.insertCoin('penny');
+        change.cashTendered = 64;
         expect(change.giveChange()).toMatchObject({'quarters': 1, 'dimes': 0, 'nickels': 1, 'pennies': 2});
     });
     test('10 change produces: quarters: 0, dimes: 1, nickels: 0, pennies: 0', function() {
         const change = new ChangeHandler(115);
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
+        change.cashTendered = 125;
         expect(change.giveChange()).toMatchObject({ 'quarters': 0, 'dimes': 1, 'nickels': 0, 'pennies': 0})
     });
     test('27 change produces: quarters: 1, dimes: 0, nickels: 0, pennies: 2', function() {
         const change = new ChangeHandler(25);
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('penny');
-        change.insertCoin('penny');
+        change.cashTendered = 52;
         expect(change.giveChange()).toMatchObject({ 'quarters': 1, 'dimes': 0, 'nickels': 0, 'pennies': 2 })
     });
     test('68 change produces: quarters: 2, dimes: 1, nickels: 1, pennies: 3', function() {
-        const change = new ChangeHandler(10);
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('quarter');
-        change.insertCoin('dime');
-        change.insertCoin('nickel');
-        change.insertCoin('penny');
-        change.insertCoin('penny');
-        change.insertCoin('penny');
+        const change = new ChangeHandler(32);
+        change.cashTendered = 100;
+        expect(change.giveChange()).toMatchObject({ 'quarters': 2, 'dimes': 1, 'nickels': 1, 'pennies': 3 })
     });
 });
